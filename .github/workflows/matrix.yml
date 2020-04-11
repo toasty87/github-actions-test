@@ -1,5 +1,5 @@
 name: Matrix
-on: pull
+on: pull_request
 
 jobs:
   node-version:
