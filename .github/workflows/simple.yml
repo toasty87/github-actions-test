@@ -1,13 +1,16 @@
 name: Shell Commands
 
-on: [push]
+on: [pull_request]
 
 jobs:
   run-shell-command:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - name: echo a string
         run: echo "Hello World"
+        timeout-minutes: 60
+        continue-on-error: true
       - name: multiline script
         run: |
           node -v

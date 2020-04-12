@@ -1,11 +1,37 @@
 name: Actions Workflow
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+      - 'feature/*' # matches feature/featA, feature/featB, doesn't match feature/feat/a
+      - 'feature/**'
+      - '!feature/featC' #will ignore this branch
+#    branches-ignore:
+    tags:
+      - v1.*
+#    tags-ignore:
+    paths:
+      - '**.js'
+      - '!filename.js' #ignore this file
+#    paths-ignore:
+#      - 'docs/**'
+
+#  repository_dispatch:
+#    types: [build]
+#  schedule:
+#    - cron: "0/5 * * * *"
+#    - cron: "0/6 * * * *"
+#  push:
+#  pull_request:
+#    types: [closed, assigned, opened, reopened]
 
 jobs:
   run-github-actions:
     runs-on: ubuntu-latest
     steps:
+      - name: payload
+        run: echo ${{ github.event.client_payload.env}}
       - name: List Files
         run: |
           pwd
@@ -15,7 +41,7 @@ jobs:
           echo $GITHUB_WORKSPACE
           echo "${{ github.token }}"
           # git clone git@github:$GITHUB_REPOSITORY
-          # git checkout $GITHUB_SHA
+          # git checkout $GITHUB_SHAa
       - name: Checkout
         uses: actions/checkout@v1
       - name: List Files After
